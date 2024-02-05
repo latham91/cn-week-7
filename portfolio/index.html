@@ -4,17 +4,107 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Static Portfolio</title>
+        <link rel="stylesheet" href="style.css" />
     </head>
     <body>
         <header>
             <nav>
-                <div>aaronlatham.</div>
+                <div class="nav-brand">aaronlatham.</div>
                 <ul>
-                    <a href="/">Home</a>
-                    <a href="/about">About</a>
-                    <a href="/skills">Skills</a>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li>
+                        <a href="mailto:latham91@icloud.com">
+                            <button class="btn-primary">Contact</button>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </header>
+
+        <section id="hero">
+            <div class="hero-title">
+                <p>Hello, my name is</p>
+                <h1>Aaron Latham.</h1>
+                <h2>I build cool stuff for the web.</h2>
+                <p class="hero-desc">
+                    I'm an aspiring junior fullstack developer currently enrolled on the Code Nation: Master Software
+                    bootcamp. My speciality is in designing modern minimalist web apps, I'm currently focusing on
+                    learning modern web technologies such as Next.js, Typescript, Node.js, Express and MongoDB.
+                </p>
+                <div class="hero-cta">
+                    <button class="btn-primary">Contact</button>
+                    <button class="btn-outline">LinkedIn</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="projects">
+                <h2>Projects.</h2>
+                <p>
+                    Journey through a collection of my most impactful and innovative projects, where I bring my web
+                    development and design expertise to life.
+                </p>
+
+                <div class="project-grid">
+                    <div class="project-card">
+                        <img src="https://via.placeholder.com/300" alt="Project 1" />
+                        <div class="project-card-content">
+                            <h3>Project 1</h3>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua.
+                            </p>
+                            <div class="project-card-buttons">
+                                <button class="btn-primary">Github Repo</button>
+                                <button class="btn-outline">Live Site</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <img src="https://via.placeholder.com/300" alt="Project 1" />
+                        <div class="project-card-content">
+                            <h3>Project 2</h3>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua.
+                            </p>
+                            <div class="project-card-buttons">
+                                <button class="btn-primary">Github Repo</button>
+                                <button class="btn-outline">Live Site</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <img src="https://via.placeholder.com/300" alt="Project 1" />
+                        <div class="project-card-content">
+                            <h3>Project 3</h3>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua.
+                            </p>
+                            <div class="project-card-buttons">
+                                <button class="btn-primary">Github Repo</button>
+                                <button class="btn-outline">Live Site</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer">
+                <p>&copy; 2021 Aaron Latham.</p>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="mailto:latham91@icloud.com">Contact</a></li>
+                </ul>
+            </div>
+        </footer>
     </body>
 </html>
