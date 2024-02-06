@@ -4,14 +4,16 @@ const app = express();
 
 app.use(express.json());
 
-const bookData = [
+let bookData = [
     {
         id: 1,
         name: "The Great Gatsby",
+        author: "F. Scott Fitzgerald",
     },
     {
         id: 2,
         name: "To Kill a Mockingbird",
+        author: "Harper Lee",
     },
 ];
 
@@ -64,6 +66,23 @@ app.delete("/books/:id", (req, res) => {
     bookData = bookData.filter((book) => book.id !== Number(id));
 
     res.status(200).json({ success: true, data: bookData });
+});
+
+// Update book by id
+// Route: PATCH /books/:id
+app.patch("/books/:id", (req, res) => {
+    const id = req.params.id;
+    const book = bookData.find((book) => book.id === Number(id));
+
+    if (!book) {
+        res.status(404).json({ success: false, message: "Book not found" });
+    }
+
+    let updatedBook = { ...book, ...req.body };
+
+    bookData = bookData.map((book) => (book.id === Number(id) ? updatedBook : book));
+
+    res.status(200).json({ success: true, data: updatedBook });
 });
 
 app.listen(5001, () => {
