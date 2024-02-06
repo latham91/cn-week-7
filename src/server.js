@@ -38,6 +38,19 @@ app.post("/books", (req, res) => {
     res.status(201).json({ success: true, data: newBook });
 });
 
+// Get book by id
+// Route: GET /books/:id
+app.get("/books/:id", (req, res) => {
+    const id = req.params.id;
+    const book = bookData.find((book) => book.id === Number(id));
+
+    if (!book) {
+        res.status(404).json({ success: false, message: "Book not found" });
+    }
+
+    res.status(200).json({ success: true, data: book });
+});
+
 // Delete book by id
 // Route: DELETE /books/:id
 app.delete("/books/:id", (req, res) => {
