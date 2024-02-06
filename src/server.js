@@ -1,9 +1,11 @@
 const express = require("express");
-const verifyRole = require("./middleware/verifyRole");
+const verifyRole = require("./middleware/basicAuth.js");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
 let bookData = [
     {
@@ -20,12 +22,14 @@ let bookData = [
 
 // Get All Books
 // Route: GET /books
+// Access: Public
 app.get("/books", (req, res) => {
     return res.status(200).json({ success: true, data: bookData });
 });
 
 // Add a new book
 // Route: POST /books
+// Access: Admin
 app.post("/books", verifyRole, (req, res) => {
     const { name, author } = req.body;
 
@@ -54,6 +58,7 @@ app.post("/books", verifyRole, (req, res) => {
 
 // Get book by id
 // Route: GET /books/:id
+// Access: Public
 app.get("/books/:id", (req, res) => {
     const id = req.params.id;
 
@@ -76,6 +81,7 @@ app.get("/books/:id", (req, res) => {
 
 // Delete book by id
 // Route: DELETE /books/:id
+// Access: Admin
 app.delete("/books/:id", verifyRole, (req, res) => {
     const id = req.params.id;
 
@@ -100,6 +106,7 @@ app.delete("/books/:id", verifyRole, (req, res) => {
 
 // Update book by id
 // Route: PATCH /books/:id
+// Access: Admin
 app.patch("/books/:id", verifyRole, (req, res) => {
     const id = req.params.id;
 
@@ -120,6 +127,9 @@ app.patch("/books/:id", verifyRole, (req, res) => {
     return res.status(200).json({ success: true, data: updatedBook });
 });
 
+// Login
+// Route: POST /login
+// Access: Public
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
 
@@ -127,11 +137,20 @@ app.post("/login", (req, res) => {
         return res.status(400).json({ success: false, message: "Please provide username and password" });
     }
 
-    if (username !== "admin" && password !== "password") {
+    if (username !== "admin") {
         return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
 
-    req.user = { role: "admin" };
+    if (password !== "password") {
+        return res.status(401).json({ success: false, message: "Invalid credentials" });
+    }
+
+    res.cookie("auth", "admin", {
+        maxAge: 900000,
+        httpOnly: true,
+        secure: false,
+    });
+
     return res.status(200).json({ success: true, message: "Login successful" });
 });
 
