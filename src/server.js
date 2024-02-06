@@ -15,10 +15,14 @@ const bookData = [
     },
 ];
 
+// Get All Books
+// Route: GET /books
 app.get("/books", (req, res) => {
     res.status(200).json({ success: true, data: bookData });
 });
 
+// Add a new book
+// Route: POST /books
 app.post("/books", (req, res) => {
     if (!req.body.name) {
         res.status(400).json({ success: false, message: "Name is required" });
@@ -32,6 +36,21 @@ app.post("/books", (req, res) => {
     bookData.push(newBook);
 
     res.status(201).json({ success: true, data: newBook });
+});
+
+// Delete book by id
+// Route: DELETE /books/:id
+app.delete("/books/:id", (req, res) => {
+    const id = req.params.id;
+    const book = bookData.find((book) => book.id === Number(id));
+
+    if (!book) {
+        res.status(404).json({ success: false, message: "Book not found" });
+    }
+
+    bookData = bookData.filter((book) => book.id !== Number(id));
+
+    res.status(200).json({ success: true, data: bookData });
 });
 
 app.listen(5001, () => {
