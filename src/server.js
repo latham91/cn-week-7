@@ -1,4 +1,5 @@
 const express = require("express");
+const verifyRole = require("./middleware/verifyRole");
 
 const app = express();
 
@@ -25,7 +26,7 @@ app.get("/books", (req, res) => {
 
 // Add a new book
 // Route: POST /books
-app.post("/books", (req, res) => {
+app.post("/books", verifyRole, (req, res) => {
     const { name, author } = req.body;
 
     try {
@@ -75,7 +76,7 @@ app.get("/books/:id", (req, res) => {
 
 // Delete book by id
 // Route: DELETE /books/:id
-app.delete("/books/:id", (req, res) => {
+app.delete("/books/:id", verifyRole, (req, res) => {
     const id = req.params.id;
 
     try {
@@ -99,7 +100,7 @@ app.delete("/books/:id", (req, res) => {
 
 // Update book by id
 // Route: PATCH /books/:id
-app.patch("/books/:id", (req, res) => {
+app.patch("/books/:id", verifyRole, (req, res) => {
     const id = req.params.id;
 
     if (!id) {
@@ -117,6 +118,21 @@ app.patch("/books/:id", (req, res) => {
     bookData = bookData.map((book) => (book.id === Number(id) ? updatedBook : book));
 
     return res.status(200).json({ success: true, data: updatedBook });
+});
+
+app.post("/login", (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ success: false, message: "Please provide username and password" });
+    }
+
+    if (username !== "admin" && password !== "password") {
+        return res.status(401).json({ success: false, message: "Invalid credentials" });
+    }
+
+    req.user = { role: "admin" };
+    return res.status(200).json({ success: true, message: "Login successful" });
 });
 
 app.listen(5001, () => {
