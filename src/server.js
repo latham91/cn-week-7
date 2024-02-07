@@ -3,7 +3,6 @@ const express = require("express");
 const app = express();
 
 app.use(express.json());
-app.use(cookieParser());
 
 let bookData = [
     {
@@ -123,33 +122,6 @@ app.patch("/books/:id", (req, res) => {
     bookData = bookData.map((book) => (book.id === Number(id) ? updatedBook : book));
 
     return res.status(200).json({ success: true, data: updatedBook });
-});
-
-// Login
-// Route: POST /login
-// Access: Public
-app.post("/login", (req, res) => {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-        return res.status(400).json({ success: false, message: "Please provide username and password" });
-    }
-
-    if (username !== "admin") {
-        return res.status(401).json({ success: false, message: "Invalid credentials" });
-    }
-
-    if (password !== "password") {
-        return res.status(401).json({ success: false, message: "Invalid credentials" });
-    }
-
-    res.cookie("auth", "admin", {
-        maxAge: 900000,
-        httpOnly: true,
-        secure: false,
-    });
-
-    return res.status(200).json({ success: true, message: "Login successful" });
 });
 
 app.listen(5001, () => {
