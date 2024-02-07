@@ -4,29 +4,48 @@ const Books = require("../models/books");
 // GET /books
 // Public Access
 exports.getAllBooks = async (req, res) => {
-    if (!req.query.genre) {
-        // Checks for the genere query parameter
+    if (req.query.title) {
         try {
-            const books = await Books.find();
+            const book = await Books.find({ title: req.query.title });
 
-            if (!books || books.length === 0) {
-                return res.status(404).json({ success: true, message: "No books found" });
+            if (!book) {
+                return res.status(404).json({ success: true, message: `No book with title: ${req.query.title}` });
             }
 
-            return res.status(200).json({ success: true, count: books.length, data: books });
+            return res.status(200).json({ success: true, data: book });
         } catch (error) {
             return res.status(500).json({ success: false, message: "Server error", error: error.message });
         }
     }
 
-    try {
-        const books = await Books.find({ genre: req.query.genre });
+    if (req.query.author) {
+        const book = await Books.find({ author: req.query.author });
 
-        if (!books || books.length === 0) {
+        if (!book) {
+            return res.status(404).json({ success: true, message: `No book with author: ${req.query.author}` });
+        }
+
+        return res.status(200).json({ success: true, data: book });
+    }
+
+    if (req.query.genre) {
+        const book = await Books.find({ genre: req.query.genre });
+
+        if (!book) {
+            return res.status(404).json({ success: true, message: `No book with genre: ${req.query.genre}` });
+        }
+
+        return res.status(200).json({ success: true, data: book });
+    }
+
+    try {
+        const books = await Books.find();
+
+        if (!books) {
             return res.status(404).json({ success: true, message: "No books found" });
         }
 
-        return res.status(200).json({ success: true, count: books.length, data: books });
+        return res.status(200).json({ success: true, data: books });
     } catch (error) {
         return res.status(500).json({ success: false, message: "Server error", error: error.message });
     }
