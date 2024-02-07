@@ -4,8 +4,8 @@ const Books = require("../models/books");
 // GET /books
 // Public Access
 exports.getAllBooks = async (req, res) => {
-    console.log(req.query.genre);
     if (!req.query.genre) {
+        // Checks for the genere query parameter
         try {
             const books = await Books.find();
 
@@ -110,6 +110,23 @@ exports.deleteBook = async (req, res) => {
         }
 
         return res.status(200).json({ success: true, message: "Book deleted successfully" });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Server error", error: error.message });
+    }
+};
+
+// DELETE ALL BOOKS
+// DELETE /books
+// Private Access TODO: Add as protect route
+exports.deleteAllBooks = async (req, res) => {
+    try {
+        const books = await Books.deleteMany();
+
+        if (!books) {
+            return res.status(404).json({ success: true, message: "No books found" });
+        }
+
+        return res.status(200).json({ success: true, message: "All books deleted successfully" });
     } catch (error) {
         return res.status(500).json({ success: false, message: "Server error", error: error.message });
     }
