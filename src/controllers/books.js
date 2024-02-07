@@ -74,11 +74,11 @@ exports.getBookById = async (req, res) => {
 // POST /books
 // Private Access TODO: Add as protect route
 exports.addNewBook = async (req, res) => {
-    const { title, author, description, genre } = req.body;
+    const { title } = req.body;
 
     try {
-        if (!title || !author || !description || !genre) {
-            return res.status(400).json({ success: false, message: "Please add all the fields" });
+        if (!title) {
+            return res.status(400).json({ success: false, message: "No title given" });
         }
 
         const newBook = await Books.create(req.body);

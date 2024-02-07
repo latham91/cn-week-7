@@ -5,18 +5,19 @@ const bookSchema = new mongoose.Schema(
         title: {
             type: String,
             required: [true, "Please add a title"],
+            unique: true,
         },
         author: {
             type: String,
-            required: [true, "Please add an author"],
+            default: "Unknown Author",
         },
         description: {
             type: String,
-            required: [true, "Please add a description"],
+            default: "No description available",
         },
         genre: {
             type: String,
-            required: [true, "Please add a genre"],
+            default: "Unknown Genre",
         },
     },
     { timestamps: true }
