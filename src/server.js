@@ -2,8 +2,8 @@ require("dotenv").config();
 require("colors");
 const express = require("express");
 const morgan = require("morgan");
-
 const dbConnect = require("./db/dbConnect.js");
+const bookRoutes = require("./routes/books.js");
 
 const PORT = process.env.PORT;
 
@@ -16,6 +16,9 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use(express.json());
+
+// Routes
+app.use("/books", bookRoutes);
 
 // Health check route
 app.get("/healthcheck", (req, res) => {
