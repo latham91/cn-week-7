@@ -115,6 +115,29 @@ exports.updateBook = async (req, res) => {
     }
 };
 
+// UPDATE AUTHOR BY TITLE
+// PUT /books/:title
+// Private Access TODO: Add as protect route
+exports.updateAuthorByTitle = async (req, res) => {
+    const { title, newAuthor } = req.body;
+
+    if (!title && !newAuthor) {
+        return res.status(400).json({ success: false, message: "No title given" });
+    }
+
+    try {
+        const book = await Books.findOneAndUpdate({ title: title }, { author: newAuthor }, { new: true });
+
+        if (!book) {
+            return res.status(404).json({ success: true, message: `Book with title: ${title} not found.` });
+        }
+
+        return res.status(200).json({ success: true, data: book });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Server error", error: error.message });
+    }
+};
+
 // DELETE A BOOK
 // DELETE /books/:id
 // Private Access TODO: Add as protect route
