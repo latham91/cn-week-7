@@ -2,12 +2,15 @@ require("dotenv").config();
 require("colors");
 const express = require("express");
 const morgan = require("morgan");
+
 const dbConnect = require("./db/dbConnect.js");
-const bookRoutes = require("./routes/books.js");
+
+const bookRoutes = require("./books/routes.js");
 
 const PORT = process.env.PORT;
 
 const app = express();
+
 dbConnect();
 
 // Dev logging

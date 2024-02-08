@@ -1,4 +1,4 @@
-const Books = require("../models/books");
+const Books = require("./model");
 
 // GET ALL BOOKS
 // GET /books
