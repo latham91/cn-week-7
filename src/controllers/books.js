@@ -12,7 +12,7 @@ exports.getAllBooks = async (req, res) => {
                 return res.status(404).json({ success: true, message: `No book with title: ${req.query.title}` });
             }
 
-            return res.status(200).json({ success: true, data: book });
+            return res.status(200).json({ success: true, count: book.length, data: book });
         } catch (error) {
             return res.status(500).json({ success: false, message: "Server error", error: error.message });
         }
@@ -22,10 +22,10 @@ exports.getAllBooks = async (req, res) => {
         const book = await Books.find({ author: req.query.author });
 
         if (!book) {
-            return res.status(404).json({ success: true, message: `No book with author: ${req.query.author}` });
+            return res.status(404).json({ success: true, message: `No books with author: ${req.query.author}` });
         }
 
-        return res.status(200).json({ success: true, data: book });
+        return res.status(200).json({ success: true, count: book.length, data: book });
     }
 
     if (req.query.genre) {
@@ -35,7 +35,7 @@ exports.getAllBooks = async (req, res) => {
             return res.status(404).json({ success: true, message: `No book with genre: ${req.query.genre}` });
         }
 
-        return res.status(200).json({ success: true, data: book });
+        return res.status(200).json({ success: true, count: book.length, data: book });
     }
 
     try {
@@ -45,7 +45,7 @@ exports.getAllBooks = async (req, res) => {
             return res.status(404).json({ success: true, message: "No books found" });
         }
 
-        return res.status(200).json({ success: true, data: books });
+        return res.status(200).json({ success: true, count: books.length, data: books });
     } catch (error) {
         return res.status(500).json({ success: false, message: "Server error", error: error.message });
     }
@@ -168,7 +168,7 @@ exports.deleteAllBooks = async (req, res) => {
             return res.status(404).json({ success: true, message: "No books found" });
         }
 
-        return res.status(200).json({ success: true, message: "All books deleted successfully" });
+        return res.status(200).json({ success: true, count: books.length, message: "All books deleted successfully" });
     } catch (error) {
         return res.status(500).json({ success: false, message: "Server error", error: error.message });
     }
