@@ -158,7 +158,6 @@ exports.deleteAllBooks = async (req, res) => {
 };
 
 // UPDATE ANY DETAILS USING TITLE
-// http://localhost:5001/books/Harry%20Potter%20and%20the%20Philosophers%20Stone%203
 // PATCH /books/:title
 // Private Access TODO: Add as protect route
 exports.updateDetailsByTitle = async (req, res) => {
