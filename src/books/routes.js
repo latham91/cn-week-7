@@ -11,6 +11,7 @@ const {
     updateDetailsByTitle,
 } = require("./controllers");
 
+// Chained route handlers
 router.route("/").get(getAllBooks).post(addNewBook).delete(deleteAllBooks).patch(updateAuthorByTitle);
 router.route("/:id").get(getBookById).put(updateBook).delete(deleteBook);
 router.route("/:title").patch(updateDetailsByTitle);
